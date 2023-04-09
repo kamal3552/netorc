@@ -8,3 +8,5 @@ The Net Orchestrator lays the foundation for central network orchestration. It a
 - Enable scheduling and feedback of job progress.
 
 ## Architectural Principles
+- The orchestrator should lay the foundations for bespoke customization and improvement, rather than trying to be exhaustive.
+- The orchestrator should not prohibit the use of a data formatter or network driver.

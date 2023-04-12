@@ -19,12 +19,11 @@ def sync_lock(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            try:
-                key = kwargs["sync_lock_key"]
-            except Exception:
+            if 'sync_lock_key' in kwargs:
+                key = kwargs.get('sync_lock_key')
+            else:
                 key = func.__name__
             uid = acquire_lock(key)
-            print(uid)
             func(*args, **kwargs)
 
         except Exception as e:

@@ -8,7 +8,7 @@ import redis
 from controller import settings
 
 
-def acquire_lock(lock_name: str, acquire_timeout: int = 10,) -> str:
+def acquire_lock(lock_name: str, acquire_timeout: int = 10,) -> str | bool:
     """Acquires the lock on a task
 
     :arg obj conn: takes redis connection object.

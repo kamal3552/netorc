@@ -61,16 +61,13 @@ def release_lock(
         ) as conn:
             pipe = conn.pipeline(True)
             while True:
-                try:
-                    pipe.watch(lockname)
-                    if str(conn.get(lockname)) == uid:
-                        pipe.multi()
-                        pipe.delete(lockname)
-                        pipe.execute()
-                        return True
-                    pipe.unwatch()
-                    break
-                except:
-                    return False
+                pipe.watch(lockname)
+                if str(conn.get(lockname)) == uid:
+                    pipe.multi()
+                    pipe.delete(lockname)
+                    pipe.execute()
+                    return True
+                pipe.unwatch()
+                break
     except Exception as e:
         raise e

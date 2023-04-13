@@ -12,7 +12,7 @@ from controller.exceptions import AcquireLockError
 def acquire_lock(
     lock_name: str,
     acquire_timeout: int = 10,
-) -> str | bool:
+) -> str:
     """Acquires the lock on a task
 
     :arg obj conn: takes redis connection object.

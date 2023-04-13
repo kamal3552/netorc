@@ -6,9 +6,13 @@ import uuid
 import redis
 
 from controller import settings
+from controller.exceptions import AcquireLockError
 
 
-def acquire_lock(lock_name: str, acquire_timeout: int = 10,) -> str | bool:
+def acquire_lock(
+    lock_name: str,
+    acquire_timeout: int = 10,
+) -> str | bool:
     """Acquires the lock on a task
 
     :arg obj conn: takes redis connection object.
@@ -18,7 +22,6 @@ def acquire_lock(lock_name: str, acquire_timeout: int = 10,) -> str | bool:
     :returns: str
     """
     uid = uuid.uuid4()
-
     end = time.time() + acquire_timeout
     while time.time() < end:
         try:
@@ -33,10 +36,13 @@ def acquire_lock(lock_name: str, acquire_timeout: int = 10,) -> str | bool:
             time.sleep(0.01)
         except Exception as e:
             raise e
-    return False
+    raise AcquireLockError()
 
 
-def release_lock(lock_name: str, uid: str,) -> bool:
+def release_lock(
+    lock_name: str,
+    uid: str,
+) -> bool:
     """Releases the lock on a task
 
     :arg obj conn: takes redis connection object.

@@ -61,13 +61,17 @@ def release_lock(
         ) as conn:
             pipe = conn.pipeline(True)
             while True:
-                pipe.watch(lockname)
-                if str(conn.get(lockname)) == uid:
-                    pipe.multi()
-                    pipe.delete(lockname)
-                    pipe.execute()
-                    return True
-                pipe.unwatch()
-                break
+                try:
+                    pipe.watch(lockname)
+                    if str(conn.get(lockname)) == uid:
+                        pipe.multi()
+                        pipe.delete(lockname)
+                        pipe.execute()
+                        return True
+                    pipe.unwatch()
+                    break
+                except redis.exceptions.WatchError as e:
+                    raise e
+
     except Exception as e:
         raise e

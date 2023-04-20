@@ -1,0 +1,33 @@
+#
+# docker-compose.dev.yml
+#
+services:
+  controller:
+    container_name: netorc-controller
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/controller/Dockerfile
+    ports:
+      - 8000:80
+    restart: unless-stopped
+    command: "uvicorn controller.api.main:fastapi --reload --port 80 --host 0.0.0.0"
+    volumes:
+      - .:/netorc/
+  redis:
+    container_name: netorc-redis
+    image: redis:6.2-bullseye
+    restart: unless-stopped
+    depends_on:
+      - controller
+  worker:
+    container_name: netorc-worker
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/worker/Dockerfile
+    command: "watchmedo auto-restart -d controller/ -p '*.py' --recursive -- celery -A controller.tasks.example worker --loglevel=INFO"
+    volumes:
+      - .:/netorc/
+    depends_on:
+      - controller
+      - redis
+    restart: unless-stopped

@@ -12,17 +12,24 @@ def task_lock(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        try:
-            if "task_lock_key" in kwargs:
-                task_lock_key = kwargs.get("tasklock_key")
-            else:
-                task_lock_key = func.__name__
+        if "task_lock_key" in kwargs:
+            task_lock_key = kwargs.get("task_lock_key")
+        else:
+            task_lock_key = func.__name__
 
+        try:
             lock = TaskLock(task_lock_key)
             lock.add()
-            return func(*args, **kwargs)
+
         except Exception as exc:
             raise exc
+
+        try:
+            return func(*args, **kwargs)
+
+        except Exception as exc:
+            raise exc
+
         finally:
             lock.remove()
 

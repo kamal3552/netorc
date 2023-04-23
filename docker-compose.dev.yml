@@ -6,7 +6,7 @@ services:
     container_name: netorc-controller
     build:
       context: ./
-      dockerfile: ./dockerfiles/controller/Dockerfile
+      dockerfile: ./controller/Dockerfile
     ports:
       - 8000:80
     restart: unless-stopped
@@ -23,8 +23,8 @@ services:
     container_name: netorc-worker
     build:
       context: ./
-      dockerfile: ./dockerfiles/worker/Dockerfile
-    command: "watchmedo auto-restart -d controller/ -p '*.py' --recursive -- celery -A controller.tasks.example worker --loglevel=INFO"
+      dockerfile: ./controller/worker/Dockerfile
+    command: "watchmedo auto-restart -d controller/ -p '*.py' --recursive -- celery -A controller.worker.tasks.example worker --loglevel=INFO"
     volumes:
       - .:/netorc/
     depends_on:

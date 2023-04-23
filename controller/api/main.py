@@ -2,9 +2,8 @@
 main.py
 """
 from fastapi import FastAPI
-from controller.tasks.example import example_task
 from controller.misc.decorators import queue_task
-
+from controller.worker.tasks.example import example_task
 
 fastapi = FastAPI()
 

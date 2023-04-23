@@ -24,7 +24,7 @@ def a_sync_lock_task(sync_lock_key: str = None) -> str:
 
 """
 import time
-from controller.tasks.celery import celery
+from controller.misc.celery import celery
 from controller.misc.decorators import task_lock
 
 

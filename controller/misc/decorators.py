@@ -2,7 +2,7 @@
 decorators.py
 """
 from functools import wraps
-from controller.tasks.task_lock import TaskLock
+from controller.misc.task_lock import TaskLock
 
 
 def task_lock(func):
@@ -46,6 +46,6 @@ def queue_task(func, priority: int = 0, *args, **kwargs):
             task = func.apply_async(args=[*args], kwargs={**kwargs}, priority=priority)
             return task
         except Exception as exc:
-            raise exc
+            raise exc  # TODO: Exception should not be raised but logged, error returned to the user.
 
     return inner()

@@ -2,10 +2,10 @@
 decorators.py
 """
 from functools import wraps
-from controller.tasks.synclock import acquire_lock, release_lock
+from controller.tasks.task_lock import TaskLock
 
 
-def sync_lock(func):
+def task_lock(func):
     """Applied to tasks which require synchronous execution.
     Workers will acquire a lock on the task before execution.
     """
@@ -13,22 +13,18 @@ def sync_lock(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            if "sync_lock_key" in kwargs:
-                key = kwargs.get("sync_lock_key")
+            if "task_lock_key" in kwargs:
+                task_lock_key = kwargs.get("tasklock_key")
             else:
-                key = func.__name__
-            uid = acquire_lock(key)
-            print(uid)
+                task_lock_key = func.__name__
+
+            lock = TaskLock(task_lock_key)
+            lock.add()
             return func(*args, **kwargs)
         except Exception as exc:
             raise exc
         finally:
-            try:
-                release_lock(key, uid)
-            except UnboundLocalError:
-                pass
-            except Exception as exc:
-                raise exc
+            lock.remove()
 
     return wrapper
 

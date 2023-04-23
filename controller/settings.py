@@ -6,31 +6,27 @@ This is not best practice, we recommend using a .env or a secret manager, see <l
 
 """
 
-from celery import Celery
+# We do NOT recommended to change this setting.
+REDIS = "redis://redis:6379"
 
-# SyncLock
+# Ensure this is the correct timezone.
+TIMEZONE = "Europe/London"
 
-## Database
-REDIS = "redis://redis:6379/0"
+UTC = True
 
-# Celery
-celery = Celery()
+# Censors celery configuration, passwords, api keys.
+# We do NOT recommended to change this setting.
+CENSORED = True
 
-## Time - Please synchronise using NTP!
-celery.conf.timezone = "Europe/London"
-celery.conf.enable_utc = True
+# Tasks can be queued with a priority.
+# This is best effort and does not guarantee a faster execution.
+# We do NOT recommended to change this setting.
+PRIORITY_LEVELS = 10  # 0-9
 
-## Broker & Backend
-celery.conf.broker_url = "redis://redis:6379/0"
-celery.conf.result_backend = "redis://redis:6379/0"
+# The default log handlers are console, file and syslog.
+LOG_FORMAT = "%(asctime)s %(levelname)s: %(message)s"
 
-## Censored
-celery.conf.humanize(with_defaults=False, censored=True)
-celery.conf.table(with_defaults=False, censored=True)
-
-## Priorities
-celery.conf.broker_transport_options = {
-    "priority_steps": list(range(10)),  # 0-9
-    "sep": ":",
-    "queue_order_strategy": "priority",
-}
+# Syslog messages are sent using UDP, for TCP, see <link>.
+# LOG_USER facility.
+SYSLOG_SERVER = "localhost"
+SYSLOG_PORT = 514

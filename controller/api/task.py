@@ -5,7 +5,7 @@ from controller.api.main import fastapi
 from controller.settings import celery
 
 
-@fastapi.get("/task/{task_id}")
+@fastapi.get("/api/task/{task_id}")
 async def task(task_id: str, cancel: bool = False):
     _task = celery.control
     if cancel is True:

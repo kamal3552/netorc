@@ -2,7 +2,7 @@
 task.py
 """
 from controller.api.main import fastapi
-from controller.settings import celery
+from controller.misc.celery import celery
 
 
 @fastapi.get("/api/task/{task_id}")

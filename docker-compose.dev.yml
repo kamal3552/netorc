@@ -1,7 +1,9 @@
 #
 # docker-compose.dev.yml
 #
+version: "3.8"
 services:
+
   controller:
     container_name: netorc-controller
     build:
@@ -13,12 +15,24 @@ services:
     command: "uvicorn controller.api.main:fastapi --reload --port 80 --host 0.0.0.0"
     volumes:
       - .:/netorc/
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 100M
+
   redis:
     container_name: netorc-redis
     image: redis:6.2-bullseye
     restart: unless-stopped
     depends_on:
       - controller
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 100M
+
   worker:
     container_name: netorc-worker
     build:
@@ -31,3 +45,8 @@ services:
       - controller
       - redis
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 100M

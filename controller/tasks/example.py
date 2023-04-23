@@ -24,14 +24,14 @@ def a_sync_lock_task(sync_lock_key: str = None) -> str:
 
 """
 import time
-from controller.settings import celery
-from controller.misc.decorators import sync_lock
+from controller.tasks.celery import celery
+from controller.misc.decorators import task_lock
 
 
 @celery.task()
-@sync_lock
+@task_lock
 def example_task() -> str:
     print("Starting task")
-    time.sleep(5)
+    time.sleep(2)
     print("Finished task")
     return 8

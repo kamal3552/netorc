@@ -5,10 +5,16 @@ We have kept connection and secret prameters used by modules in this file.
 This is not best practice, we recommend using a .env or a secret manager, see <link>
 
 """
+import os
 
 # Default task directory.
-# Task modules are auto generated from this path.
 TASK_DIR = "controller/worker/tasks/"
+
+TASKS = [
+    (TASK_DIR + x).replace("/", ".").strip(".py")
+    for x in os.listdir(TASK_DIR)
+    if not x.startswith("__") and x.endswith(".py")
+]
 
 # We do NOT recommended to change this setting.
 REDIS = "redis://redis:6379"

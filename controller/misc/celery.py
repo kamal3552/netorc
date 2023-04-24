@@ -5,14 +5,7 @@ import os
 from celery import Celery
 from controller import settings
 
-
-tasks = [
-    (settings.TASK_DIR + x).replace("/", ".").strip(".py")
-    for x in os.listdir(settings.TASK_DIR)
-    if not x.startswith("__") and x.endswith(".py")
-]
-
-celery = Celery(include=tasks)
+celery = Celery(include=settings.TASKS)
 
 # Time
 celery.conf.timezone = settings.TIMEZONE

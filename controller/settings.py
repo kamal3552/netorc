@@ -6,6 +6,10 @@ This is not best practice, we recommend using a .env or a secret manager, see <l
 
 """
 
+# Default task directory.
+# Task modules are auto generated from this path.
+TASK_DIR = "controller/worker/tasks/"
+
 # We do NOT recommended to change this setting.
 REDIS = "redis://redis:6379"
 

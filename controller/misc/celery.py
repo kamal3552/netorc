@@ -1,10 +1,18 @@
 """
 celery.py
 """
+import os
 from celery import Celery
 from controller import settings
 
-celery = Celery()
+
+tasks = [
+    (settings.TASK_DIR + x).replace("/", ".").strip(".py")
+    for x in os.listdir(settings.TASK_DIR)
+    if not x.startswith("__") and x.endswith(".py")
+]
+
+celery = Celery(include=tasks)
 
 # Time
 celery.conf.timezone = settings.TIMEZONE
@@ -24,3 +32,6 @@ celery.conf.broker_transport_options = {
     "sep": ":",
     "queue_order_strategy": "priority",
 }
+
+if __name__ == "__main__":
+    celery.start()

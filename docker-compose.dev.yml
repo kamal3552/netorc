@@ -38,7 +38,7 @@ services:
     build:
       context: ./
       dockerfile: ./controller/worker/Dockerfile
-    command: "watchmedo auto-restart -d controller/ -p '*.py' --recursive -- celery -A controller.worker.tasks.example worker --loglevel=INFO"
+    command: "watchmedo auto-restart -d controller/ -p '*.py' --recursive -- celery -A controller.misc worker --loglevel=INFO"
     volumes:
       - .:/netorc/
     depends_on:

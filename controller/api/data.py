@@ -1,11 +1,13 @@
 """
 data.py
 """
-from controller.api.main import fastapi
+from fastapi import APIRouter
 from controller.misc.celery import celery
 
+router = APIRouter(prefix="/api/data", tags=["data"])
 
-@fastapi.get("/api/data/task/{task_id}")
-async def task_result(task_id: str):
+
+@router.get("/task/{task_id}")
+async def task_result(task_id: str) -> dict:
     task = celery.AsyncResult(task_id)
     return {"status": task.status, "result": task.result}

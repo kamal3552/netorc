@@ -1,12 +1,14 @@
 """
 task.py
 """
-from controller.api.main import fastapi
+from fastapi import APIRouter
 from controller.misc.celery import celery
 
+router = APIRouter(prefix="/api/task", tags=["task"])
 
-@fastapi.get("/api/task/{task_id}")
-async def task(task_id: str, cancel: bool = False):
+
+@router.get("/{task_id}")
+async def task(task_id: str, cancel: bool = False) -> dict:
     _task = celery.control
     if cancel is True:
         _task.revoke(task_id, terminate=True)

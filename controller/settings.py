@@ -7,15 +7,6 @@ This is not best practice, we recommend using a .env or a secret manager, see <l
 """
 import os
 
-# Default task directory.
-TASK_DIR = "controller/worker/tasks/"
-
-TASKS = [
-    (TASK_DIR + x).replace("/", ".").strip(".py")
-    for x in os.listdir(TASK_DIR)
-    if not x.startswith("__") and x.endswith(".py")
-]
-
 # We do NOT recommended to change this setting.
 REDIS = "redis://redis:6379"
 
@@ -40,3 +31,12 @@ LOG_FORMAT = "%(asctime)s %(levelname)s: %(message)s"
 # LOG_USER facility.
 SYSLOG_SERVER = "localhost"
 SYSLOG_PORT = 514
+
+# Default task directory.
+TASK_DIR = "controller/worker/tasks/"
+
+TASKS = [
+    (TASK_DIR + x).replace("/", ".").strip(".py")
+    for x in os.listdir(TASK_DIR)
+    if not x.startswith("__") and x.endswith(".py")
+]

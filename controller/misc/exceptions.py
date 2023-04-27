@@ -1,4 +1,4 @@
-class AcquireLockException(Exception):
+class AddLockException(Exception):
     """Exception raised for lock not aquired"""
 
     def __init__(self):

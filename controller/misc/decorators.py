@@ -3,6 +3,8 @@ decorators.py
 """
 from functools import wraps
 from controller.misc.task_lock import TaskLock
+from controller.metrics.logger import logger
+from controller.misc.exceptions import AddLockException
 
 
 def task_lock(func):
@@ -14,24 +16,49 @@ def task_lock(func):
     def wrapper(*args, **kwargs):
         if "task_lock_key" in kwargs:
             task_lock_key = kwargs.get("task_lock_key")
+            logger.debug(
+                "Found task lock key for %s, using: %s as key",
+                func.__name__,
+                task_lock_key,
+            )
         else:
             task_lock_key = func.__name__
+            logger.debug(
+                "No task lock key found for %s, using: %s as key",
+                func.__name__,
+                task_lock_key,
+            )
 
         try:
-            lock = TaskLock(task_lock_key)
+            try:
+                lock = TaskLock(task_lock_key)
+
+            except Exception as exc:
+                raise exc
+
             lock.add()
 
-        except Exception as exc:
+        except AddLockException as exc:
+            logger.error(
+                "Unable to add lock for task: %s, with key: %s",
+                func.__name__,
+                task_lock_key,
+            )
             raise exc
 
         try:
             return func(*args, **kwargs)
 
         except Exception as exc:
+            logger.error("An exception occurred when executing: %s", func.__name__)
             raise exc
 
         finally:
-            lock.remove()
+            try:
+                lock.remove()
+
+            except Exception as exc:
+                raise exc
 
     return wrapper
 
@@ -43,9 +70,21 @@ def queue_task(func, priority: int = 0, *args, **kwargs):
 
     def inner():
         try:
+            getattr(func, "apply_async")
+
+        except Exception as exc:
+            logger.error(
+                "Function %s is not a celery task, have you missed a decorator?",
+                func.__name__,
+            )
+            raise exc
+
+        try:
             task = func.apply_async(args=[*args], kwargs={**kwargs}, priority=priority)
             return task
+
         except Exception as exc:
-            raise exc  # TODO: Exception should not be raised but logged, error returned to the user.
+            logger.error("An exception occurred when queuing: %s", func.__name__)
+            raise exc
 
     return inner()

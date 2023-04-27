@@ -6,7 +6,7 @@ import uuid
 import redis
 
 from controller import settings
-from controller.misc.exceptions import AcquireLockException
+from controller.misc.exceptions import AddLockException
 from controller.metrics.logger import logger
 
 
@@ -17,9 +17,10 @@ class TaskLock:
         try:
             self.conn = redis.from_url(settings.REDIS + "/1")
             logger.info("Connected to redis instance: %s", settings.REDIS)
-        except Exception as exc:
-            logger.critical(exc_info=True)
-            raise exc
+        except Exception:
+            logger.critical(
+                "An exception occurred connecting to redis instance %s", settings.REDIS
+            )
 
         self.task_lock_key = "lock:" + task_lock_key
         self.uid = str(uuid.uuid4())
@@ -38,34 +39,36 @@ class TaskLock:
                     return True
                 time.sleep(0.01)
             except Exception as exc:
-                logger.critical(exc_info=True)
+                logger.error(
+                    "An exception occurred adding %s with uid %s",
+                    self.task_lock_key,
+                    self.uid,
+                )
                 raise exc
-        raise AcquireLockException
+        raise AddLockException
 
     def remove(self):
         """Remove the lock
 
         :returns: True
         """
-        try:
-            pipe = self.conn.pipeline(True)
-            while True:
-                try:
-                    pipe.watch(self.task_lock_key)
-                    if self.conn.get(self.task_lock_key).decode("utf-8") == self.uid:
-                        pipe.multi()
-                        pipe.delete(self.task_lock_key)
-                        pipe.execute()
-                        logger.info(
-                            "Removed %s with uid: %s", self.task_lock_key, self.uid
-                        )
-                        return True
-                    pipe.unwatch()
-                    break
-                except (
-                    redis.exceptions.WatchError
-                ) as exc:  # TODO: How to handle retries
-                    raise exc
-        except Exception as exc:
-            logger.critical(exc_info=True)
-            raise exc
+
+        pipe = self.conn.pipeline(True)
+        while True:
+            try:
+                pipe.watch(self.task_lock_key)
+                if self.conn.get(self.task_lock_key).decode("utf-8") == self.uid:
+                    pipe.multi()
+                    pipe.delete(self.task_lock_key)
+                    pipe.execute()
+                    logger.info("Removed %s with uid: %s", self.task_lock_key, self.uid)
+                    return True
+                pipe.unwatch()
+                break
+            except redis.exceptions.WatchError as exc:
+                logger.critical(
+                    "Key changed during transaction, failed to remove %s with uid: %s",
+                    self.task_lock_key,
+                    self.uid,
+                )
+                raise exc

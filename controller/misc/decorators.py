@@ -68,7 +68,7 @@ def queue_task(func, priority: int = 0, *args, **kwargs):
     and its arguments to be abstracted.
     """
 
-    def inner():
+    def wrapper():
         try:
             getattr(func, "apply_async")
 
@@ -87,4 +87,4 @@ def queue_task(func, priority: int = 0, *args, **kwargs):
             logger.error("An exception occurred when queuing: %s", func.__name__)
             raise exc
 
-    return inner()
+    return wrapper()

@@ -8,21 +8,21 @@
 ><img src="https://badgen.net/github/closed-issues/netorc-community/netorc" alt="netorc closed issues" /></a></p>
 
 
-<p align="center">NetORC lays the foundation for central network orchestration. It acts as an intermediary between your business support systems and the network automation tooling of your choice. By being tool agnostic, the project aims to enhance the adoption of network automation into other business functions through its simple-to-use API.</p>
+<p align="center">NetORC lays the foundation for central network orchestration. It acts as an intermediary between your business support systems and the network automation tooling of your choice. By being tool agnostic, the project aims to enhance the adoption of network automation into other business functions through its simple-to-use REST API.</p>
 
 
 ## Project Goals
 
-- Develop an open-source, vendor-agnostic network orchestrator API.
+- Develop an open-source, vendor-agnostic network orchestrator with a REST API.
 - Prioritize reliability and usability over speed.
 - Provide a set of helpful add-ons to support the adoption of central orchestration.
-- Enable queuing and feedback of job progress.
+- Enable queuing and feedback of task progress.
 
 ## Architectural Principles
 
 - The orchestrator should lay the foundations for bespoke customization and improvement, rather than trying to be exhaustive.
 - The orchestrator ought to facilitate the importation of automation scripts already in existence with minimal or no alteration required from the user.
-- The orchestrator should be designed to abstract away technical details such as REST APIs, security frameworks, and queuing frameworks, enabling the user to utilize the tool without requiring an understanding of these underlying technologies.
+- The orchestrator should be designed to abstract away technical details such it's REST APIs, security, and queuing framework, enabling the user to utilize the tool without requiring an understanding of these underlying technologies.
 
 ## Demo Quick Start
 

@@ -21,6 +21,7 @@ def task_lock(func):
                 func.__name__,
                 task_lock_key,
             )
+            kwargs.pop("task_lock_key")
         else:
             task_lock_key = func.__name__
             logger.debug(

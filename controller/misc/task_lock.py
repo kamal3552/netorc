@@ -13,7 +13,7 @@ from controller.metrics.logger import logger
 class TaskLock:
     """Distributed lock mechanism to Add/Remove lock on a task"""
 
-    def __init__(self, task_lock_key: str = None, timeout: int = 10):
+    def __init__(self, task_lock_key: str = None, timeout: int = 30):
         try:
             self.conn = redis.from_url(settings.REDIS + "/1")
             logger.info("Connected to redis instance: %s", settings.REDIS)

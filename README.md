@@ -32,4 +32,4 @@ Finally, build the images and start the containers with:
 docker compose -f docker-compose.dev.yml
 ```
 
-Navigate to `localhost:8000/api", congrats! 🎉. Documentation can be found at /docs
+Navigate to `localhost:8000/api`, congrats! 🎉. Documentation can be found at `/docs`

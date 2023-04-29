@@ -24,7 +24,7 @@ CENSORED = True
 # We do NOT recommended to change this setting.
 PRIORITY_LEVELS = 10  # 0-9
 
-# The default log level is set to debug.
+# The default log level is set to info.
 # To change this value refer to https://docs.python.org/3/library/logging.html#logging-levels
 LOG_LEVEL = 20
 

@@ -18,9 +18,9 @@
 
 ## Demo Quick Start
 
-First, [download](https://docs.docker.com/get-docker/) and install 🐳**Docker**. Engine version: 19.03.0 or higher is required.
+First, [download](https://docs.docker.com/get-docker/) and install 🐳 **Docker**. Engine version: 19.03.0 or higher is required.
 
-Next, clone the respository using the following command: 
+Next, clone the repository using the following command: 
 ```bash
 git clone https://github.com/netorc-community/netorc.git && cd netorc
 ```

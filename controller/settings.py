@@ -2,7 +2,7 @@
 NetORC configuration file.
 
 We have kept connection and secret prameters used by modules in this file.
-This is not best practice, we recommend using a .env or a secret manager, see <link>
+This is not best practice, we recommend using a .env or a secret manager, see: <link>
 
 """
 import os
@@ -25,7 +25,7 @@ CENSORED = True
 PRIORITY_LEVELS = 10  # 0-9
 
 # The default log level is set to info.
-# To change this value refer to https://docs.python.org/3/library/logging.html#logging-levels
+# To change this value, see: https://docs.python.org/3/library/logging.html#logging-levels
 LOG_LEVEL = 20
 
 # The default log handlers are console, file and syslog.

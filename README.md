@@ -15,6 +15,8 @@
 ## Founding Principles
 
 - The orchestrator should lay the foundations for bespoke customization and improvement, rather than trying to be exhaustive.
+- The orchestrator ought to facilitate the importation of automation scripts already in existence with minimal or no alteration required from the user.
+- The orchestrator should be designed to abstract away technical details such as REST APIs, security frameworks, and queuing frameworks, enabling the user to utilize the tool without requiring an understanding of these underlying technologies.
 
 ## Demo Quick Start
 

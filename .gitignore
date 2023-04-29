@@ -1,5 +1,6 @@
-# Mac Specific
+# Personal
 .DS_Store
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -60,6 +61,7 @@ cover/
 
 # Django stuff:
 *.log
+/logs
 local_settings.py
 db.sqlite3
 db.sqlite3-journal

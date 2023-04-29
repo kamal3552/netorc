@@ -30,7 +30,7 @@ First, [download](https://docs.docker.com/get-docker/) and install 🐳 **Docker
 
 Next, clone the repository using the following command: 
 ```bash
-git clone https://github.com/netorc-community/netorc.git && cd netorc
+git clone https://github.com/netorc-community/netorc.git && cd netorc && mkdir logs
 ```
 
 Finally, build the images and start the containers with:

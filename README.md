@@ -2,9 +2,12 @@
     <img alt="netorc logo" src="https://avatars.githubusercontent.com/u/130744316?s=200&v=4" width="200"/>
 </h1>
 
-<p align="center"><a href="https://github.com/netorc-community/netorc/issues" 
-><img src="https://img.shields.io/github/issues/netorc-community/netorc.svg" alt="netorc open issues" /></a>&nbsp;<a href="https://github.com/netorc-community/netorc/issues?q=is%3Aissue+is%3Aclosed+" 
-><img src="https://img.shields.io/github/issues-closed/netorc-community/netorc.svg" alt="netorc closed issues" /></a></p>
+<p align="center">
+<img src="https://badgen.net/badge/version/demo/green?icon=github" alt="netorc status"/>&nbsp;<a href="https://github.com/netorc-community/netorc/issues" 
+><img src="https://badgen.net/github/open-issues/netorc-community/netorc" alt="netorc open issues" /></a>&nbsp;<a href="https://github.com/netorc-community/netorc/issues?q=is%3Aissue+is%3Aclosed+" 
+><img src="https://badgen.net/github/closed-issues/netorc-community/netorc" alt="netorc closed issues" /></a></p>
+
+
 <p align="center">NetORC lays the foundation for central network orchestration. It acts as an intermediary between your business support systems and the network automation tooling of your choice. By being tool agnostic, the project aims to enhance the adoption of network automation into other business functions through its simple-to-use API.</p>
 
 

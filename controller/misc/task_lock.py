@@ -17,10 +17,11 @@ class TaskLock:
         try:
             self.conn = redis.from_url(settings.REDIS + "/1")
             logger.info("Connected to redis instance: %s", settings.REDIS)
-        except Exception:
+        except Exception as exc:
             logger.critical(
                 "An exception occurred connecting to redis instance: %s", settings.REDIS
             )
+            raise exc
 
         self.task_lock_key = "lock:" + task_lock_key
         self.uid = str(uuid.uuid4())

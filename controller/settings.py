@@ -24,6 +24,10 @@ CENSORED = True
 # We do NOT recommended to change this setting.
 PRIORITY_LEVELS = 10  # 0-9
 
+# The default log level is set to debug.
+# To change this value refer to https://docs.python.org/3/library/logging.html#logging-levels
+LOG_LEVEL = 20
+
 # The default log handlers are console, file and syslog.
 LOG_FORMAT = "%(asctime)s %(levelname)s: %(message)s"
 

@@ -5,7 +5,8 @@ import logging
 from controller import settings
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+
+logger.setLevel(settings.LOG_LEVEL)
 
 console = logging.StreamHandler()
 

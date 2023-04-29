@@ -12,7 +12,7 @@
 - Provide a set of helpful add-ons to support the adoption of central orchestration.
 - Enable queuing and feedback of job progress.
 
-## Founding Principles
+## Architectural Principles
 
 - The orchestrator should lay the foundations for bespoke customization and improvement, rather than trying to be exhaustive.
 - The orchestrator ought to facilitate the importation of automation scripts already in existence with minimal or no alteration required from the user.
